@@ -1,0 +1,38 @@
+﻿@using WebApp.Models;
+
+@{
+    Layout = "_Layout";
+    @model SampleViewModel
+}
+
+ 
+
+<div>
+    <h2>Fruit</h2>
+    @using (Html.BeginForm("Fruit", "Sample", null, FormMethod.Post))
+    {
+        <label>Name :</label>
+        @Html.TextBoxFor(m => m.Name)
+        <button type="submit">Add</button>
+    }
+    <div style="margin-bottom: 60px;"></div>
+    <table style="border: 1px solid black; width: 50%;">
+        <thead>
+            <tr style="border: 1px solid black;">
+                <td style="border: 1px solid black;">ID</td>
+                <td style="border: 1px solid black;">Name</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var fruit in Model.Fruits)
+            {
+                <tr style="border: 1px solid black;">
+                    <td style="border: 1px solid black;">@fruit.fruitidx</td>
+                    <td style="border: 1px solid black;">@fruit.name</td>
+                    <td><a href="/sample/deletefruit?idx=@fruit.fruitidx" style=" background-color: red; cursor: pointer; color: white; margin: 5px; border: 1px solid white;">삭제</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
