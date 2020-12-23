@@ -12,8 +12,10 @@
     @using (Html.BeginForm("Fruit", "Sample", null, FormMethod.Post))
     {
         <label>Name :</label>
+        @Html.HiddenFor(m => m.ModifyIdx)
         @Html.TextBoxFor(m => m.Name)
-        <button type="submit">Add</button>
+        @if (Model.ModifyIdx == 0) {<button type="submit">Add</button>}
+        else {<button type="submit">Modify</button> }
     }
     <div style="margin-bottom: 60px;"></div>
     <table style="border: 1px solid black; width: 50%;">
@@ -30,7 +32,10 @@
                 <tr style="border: 1px solid black;">
                     <td style="border: 1px solid black;">@fruit.fruitidx</td>
                     <td style="border: 1px solid black;">@fruit.name</td>
-                    <td><a href="/sample/deletefruit?idx=@fruit.fruitidx" style=" background-color: red; cursor: pointer; color: white; margin: 5px; border: 1px solid white;">삭제</a></td>
+                    <td>
+                        <a href="/sample/deletefruit?idx=@fruit.fruitidx" style="background-color: red; cursor: pointer; color: white; margin: 5px; border: 1px solid white;">삭제</a>
+                        <a href="/sample/fruit?idx=@fruit.fruitidx" style="background-color: turquoise; cursor: pointer; color: white; margin: 5px; border: 1px solid white;">수정</a>
+                    </td>
                 </tr>
             }
         </tbody>

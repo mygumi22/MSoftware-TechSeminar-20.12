@@ -8,6 +8,8 @@ namespace WebApp.Models
     public class SampleViewModel
     {
         public string Name { get; set; }
+        public int ModifyIdx { get; set; }
         public List<FruitModel> Fruits { get; set; }
+        
     }
 }

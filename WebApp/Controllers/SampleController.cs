@@ -24,11 +24,21 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Fruit()
+        public IActionResult Fruit(int? idx)
         {
             SampleViewModel vm = new SampleViewModel();
-            vm.Name = string.Empty;
             vm.Fruits = db.Fruit.ToList();
+
+            if (idx == null)
+            {
+                vm.Name = string.Empty;
+                vm.ModifyIdx = 0;
+            }
+            else
+            {
+                vm.Name = db.Fruit.Find(idx).name;
+                vm.ModifyIdx = (int)idx;
+            }
 
             return View(vm);
         }
@@ -38,10 +48,20 @@ namespace WebApp.Controllers
         {
             if (!string.IsNullOrEmpty(vm.Name))
             {
-                FruitModel fruit = new FruitModel();
-                fruit.name = vm.Name;
-                db.Fruit.Add(fruit);
-                db.SaveChanges();
+                if(vm.ModifyIdx == 0)
+                {
+                    FruitModel fruit = new FruitModel();
+                    fruit.name = vm.Name;
+                    db.Fruit.Add(fruit);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    FruitModel fruit = db.Fruit.Find(vm.ModifyIdx);
+                    fruit.name = vm.Name;
+                    db.Fruit.Update(fruit);
+                    db.SaveChanges();
+                }
             }
 
             return RedirectToAction("Fruit");
